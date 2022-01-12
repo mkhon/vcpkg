@@ -40,14 +40,12 @@ function(z_vcpkg_get_cmake_vars out_file)
     endif()
 
     if(DEFINED VCPKG_BUILD_TYPE)
-        set(cmake_vars_file "${CURRENT_BUILDTREES_DIR}/cmake-vars-${TARGET_TRIPLET}-${VCPKG_BUILD_TYPE}.cmake.log")
         set(cache_var "Z_VCPKG_GET_CMAKE_VARS_FILE_${VCPKG_BUILD_TYPE}")
     else()
-        set(cmake_vars_file "${CURRENT_BUILDTREES_DIR}/cmake-vars-${TARGET_TRIPLET}.cmake.log")
         set(cache_var Z_VCPKG_GET_CMAKE_VARS_FILE)
     endif()
     if(NOT DEFINED CACHE{${cache_var}})
-        set(${cache_var}  "${cmake_vars_file}"
+        set(${cache_var} "${CURRENT_BUILDTREES_DIR}/cmake-vars-${TARGET_TRIPLET}-combined.cmake.log"
             CACHE PATH "The file to include to access the CMake variables from a generated project.")
         vcpkg_configure_cmake(
             SOURCE_PATH "${SCRIPTS}/get_cmake_vars"
